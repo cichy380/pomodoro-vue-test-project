@@ -9,7 +9,7 @@ export default new Router({
     routes: [
         {
             path: '/plain',
-            name: 'ShoppingListPlain',
+            name: 'PomodoroPlain',
             component: Plain
         },
         {
