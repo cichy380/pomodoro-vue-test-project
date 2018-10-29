@@ -1,6 +1,6 @@
 # Pomodoro
 
-Application inspired with examples from book 
+Application inspired with examples from 
 "[Learning Vue.js 2](https://books.google.pl/books/about/vue.html?id=nszcDgAAQBAJ)" book and 
 [pomodoro technique](http://pomodorotechnique.com). Original application (described in the book) is available on 
 [chudaol](https://github.com/chudaol) / [Pomodoro](https://github.com/chudaol/Pomodoro).
