@@ -6,21 +6,21 @@ import SingleFileComponents from '../components/_verSingleFileComponents'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/plain',
-      name: 'ShoppingListPlain',
-      component: Plain
-    },
-    {
-      path: '/singlefile',
-      name: 'ShoppingListSingleFileComponents',
-      component: SingleFileComponents
-    },
-    {
-      path: '/',
-      name: 'Homepage',
-      component: SingleFileComponents
-    }
-  ]
+    routes: [
+        {
+            path: '/plain',
+            name: 'ShoppingListPlain',
+            component: Plain
+        },
+        {
+            path: '/singlefile',
+            name: 'ShoppingListSingleFileComponents',
+            component: SingleFileComponents
+        },
+        {
+            path: '/',
+            name: 'Homepage',
+            component: SingleFileComponents
+        }
+    ]
 })

@@ -13,37 +13,5 @@
 </template>
 
 <script>
-import AddItemComponent from './AddItemComponent'
-import ItemsComponent from './ItemsComponent'
 
-let data = {
-  items: [
-    {id: 'sl-01', text: 'Bananas', checked: false},
-    {id: 'sl-02', text: 'Apples', checked: true},
-    {id: 'sl-03', text: 'Orange', checked: false}
-  ],
-  title: 'Shopping List based on Single File Components',
-  newItem: ''
-}
-
-export default {
-  name: 'ShoppingListSingleFileComponents',
-  components: { AddItemComponent, ItemsComponent },
-  data () {
-    return data
-  },
-  methods: {
-    addItem: function (text) {
-      this.items.push({
-        id: this._generateId(),
-        text: text,
-        checked: false
-      })
-    },
-
-    _generateId: function () {
-      return 'sl-' + Math.random().toString(36).substr(2, 9)
-    }
-  }
-}
 </script>
