@@ -15,6 +15,8 @@
       <button type="button" class="btn btn-outline-primary" @click="pause()" :disabled="state!=='started'">Pause</button>
       <button type="button" class="btn btn-outline-primary" @click="stop()" :disabled="state!=='started' && state!=='paused'">Stop</button>
     </div>
+
+    <img :src="'http://thecatapi.com/api/images/get?type=gif&size=med&ts=' + timestamp" />
   </div>
 </template>
 
@@ -93,6 +95,12 @@
                     this.minute = WORKING_TIME
                 } else {
                     this.minute = RESTING_TIME
+                }
+
+                // update timestamp for cat-image
+                if (this.second % 10 === 0) {
+                    let date = new Date()
+                    this.timestamp = date.getTime()
                 }
             }
         }
