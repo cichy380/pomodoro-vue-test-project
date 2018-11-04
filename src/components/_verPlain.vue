@@ -10,13 +10,18 @@
       </div>
     </section>
 
-    <div class="btn-group btn-group-sm" role="group">
+    <p class="btn-group" role="group">
       <button type="button" class="btn btn-outline-primary" @click="start()" :disabled="state==='started'">Play</button>
       <button type="button" class="btn btn-outline-primary" @click="pause()" :disabled="state!=='started'">Pause</button>
       <button type="button" class="btn btn-outline-primary" @click="stop()" :disabled="state!=='started' && state!=='paused'">Stop</button>
-    </div>
+    </p>
 
-    <img :src="'http://thecatapi.com/api/images/get?type=gif&size=med&ts=' + timestamp" />
+    <figure v-if="pomodoroState==='rest'">
+      <img :src="'http://thecatapi.com/api/images/get?type=gif&size=med&ts=' + timestamp" />
+      <figcaption class="small text-muted">
+        It is your rest time, so look on the cat picture from <a href="http://thecatapi.com/" target="_blank">thecatapi.com</a>
+      </figcaption>
+    </figure>
   </div>
 </template>
 
@@ -30,8 +35,8 @@
         STOPPED: 'stopped',
         PAUSED: 'paused'
     }
-    const WORKING_TIME = 1
-    const RESTING_TIME = 2
+    const WORKING_TIME = 5
+    const RESTING_TIME = 1
 
     export default {
         name: 'PomodoroPlain',
@@ -76,6 +81,13 @@
             },
 
             _tick () {
+                // update timestamp for cat-image
+                if (this.second % 10 === 0) {
+                    let date = new Date()
+                    this.timestamp = date.getTime()
+                }
+                console.log(this.second, this.second % 10, this.timestamp)
+
                 if (this.second !== 0) {
                     this.second--
                     return null
@@ -95,12 +107,6 @@
                     this.minute = WORKING_TIME
                 } else {
                     this.minute = RESTING_TIME
-                }
-
-                // update timestamp for cat-image
-                if (this.second % 10 === 0) {
-                    let date = new Date()
-                    this.timestamp = date.getTime()
                 }
             }
         }
