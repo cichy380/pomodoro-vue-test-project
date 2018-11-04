@@ -14,7 +14,7 @@ export default new Router({
         },
         {
             path: '/singlefile',
-            name: 'ShoppingListSingleFileComponents',
+            name: 'PomodoroSingleFileComponents',
             component: SingleFileComponents
         },
         {
