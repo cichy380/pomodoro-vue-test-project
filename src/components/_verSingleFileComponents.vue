@@ -5,7 +5,7 @@
 
     <section class="jumbotron p-2">
       <div class="timer display-4">
-        <span :class="{'alert-danger':pomodoroState==='work', 'alert-success':pomodoroState==='rest', }">{{ message }}</span>
+        <state-title :has-working="pomodoroState==='work'"></state-title>
         {{ min }}:{{ sec }}
       </div>
     </section>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import Title from './StateTitleComponent'
+    import StateTitle from './StateTitleComponent'
     import Control from './ControlsComponent'
     import Cats from './CatsComponent'
 
@@ -45,7 +45,7 @@
     export default {
         name: 'PomodoroSingleFileComponents',
 
-        components: { Title, Control, Cats },
+        components: { StateTitle, Control, Cats },
 
         data () {
             return {
@@ -58,9 +58,6 @@
         },
 
         computed: {
-            message: function () {
-                return this.pomodoroState === POMODORO_STATES.WORK ? 'Work' : 'Rest'
-            },
             min: function () {
                 return (this.minute < 10) ? `0${this.minute}` : this.minute
             },
