@@ -34,8 +34,8 @@
         STOPPED: 'stopped',
         PAUSED: 'paused'
     }
-    const WORKING_TIME = 1
-    const RESTING_TIME = 1
+    const WORKING_TIME = 15 // seconds
+    const RESTING_TIME = 8 // seconds
 
     export default {
         name: 'PomodoroSingleFileComponents',
@@ -45,8 +45,8 @@
         data () {
             return {
                 state: STATES.STOPPED,
-                minute: WORKING_TIME,
-                second: 0,
+                minute: Math.floor(WORKING_TIME / 60),
+                second: (WORKING_TIME % 60),
                 pomodoroState: POMODORO_STATES.WORK
             }
         },
@@ -67,17 +67,11 @@
                 this.state = STATES.STOPPED
                 clearInterval(this.interval)
                 this.pomodoroState = POMODORO_STATES.WORK
-                this.minute = WORKING_TIME
-                this.second = 0
+                this.minute = Math.floor(WORKING_TIME / 60)
+                this.second = (WORKING_TIME % 60)
             },
 
             _tick () {
-                // update timestamp for cat-image
-                if (this.second % 10 === 0) {
-                    let date = new Date()
-                    this.timestamp = date.getTime()
-                }
-
                 if (this.second !== 0) {
                     this.second--
                     return null
@@ -94,9 +88,11 @@
 
                 // timer reset
                 if (this.pomodoroState === POMODORO_STATES.WORK) {
-                    this.minute = WORKING_TIME
+                    this.minute = Math.floor(WORKING_TIME / 60)
+                    this.second = (WORKING_TIME % 60)
                 } else {
-                    this.minute = RESTING_TIME
+                    this.minute = Math.floor(RESTING_TIME / 60)
+                    this.second = (RESTING_TIME % 60)
                 }
             }
         }
