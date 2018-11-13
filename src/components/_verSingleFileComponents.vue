@@ -6,7 +6,7 @@
     <section class="jumbotron p-2">
       <div class="timer display-4">
         <state-title :has-working="pomodoroState==='work'"></state-title>
-        {{ min }}:{{ sec }}
+        {{ minute | leftpad }}:{{ second | leftpad }}
       </div>
     </section>
 
@@ -57,15 +57,6 @@
             }
         },
 
-        computed: {
-            min: function () {
-                return (this.minute < 10) ? `0${this.minute}` : this.minute
-            },
-            sec: function () {
-                return (this.second < 10) ? `0${this.second}` : this.second
-            }
-        },
-
         methods: {
             start () {
                 this.state = STATES.STARTED
@@ -92,7 +83,6 @@
                     let date = new Date()
                     this.timestamp = date.getTime()
                 }
-                console.log(this.second, this.second % 10, this.timestamp)
 
                 if (this.second !== 0) {
                     this.second--

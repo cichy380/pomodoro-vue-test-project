@@ -6,6 +6,10 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+Vue.filter('leftpad', (value) => {
+    return (value < 10) ? `0${value}` : value
+})
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
