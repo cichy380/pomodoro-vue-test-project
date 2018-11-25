@@ -16,19 +16,14 @@
       <button type="button" class="btn btn-outline-primary" @click="stop()" :disabled="state!=='started' && state!=='paused'">Stop</button>
     </p>
 
-    <figure v-if="pomodoroState==='rest'">
-      <img :src="'http://thecatapi.com/api/images/get?type=gif&size=med&ts=' + timestamp" />
-      <figcaption class="small text-muted">
-        It is your rest time, so look on the cat picture from <a href="http://thecatapi.com/" target="_blank">thecatapi.com</a>
-      </figcaption>
-    </figure>
+    <cat-pics v-if="pomodoroState==='rest'"></cat-pics>
   </div>
 </template>
 
 <script>
     import StateTitle from './StateTitleComponent'
     import Control from './ControlsComponent'
-    import Cats from './CatsComponent'
+    import CatPics from './CatPicsComponent'
     import leftpad from './../filters/Leftpad'
 
     const POMODORO_STATES = {
@@ -40,21 +35,20 @@
         STOPPED: 'stopped',
         PAUSED: 'paused'
     }
-    const WORKING_TIME = 1
-    const RESTING_TIME = 1
+    const WORKING_TIME = 15 // seconds
+    const RESTING_TIME = 8 // seconds
 
     export default {
         name: 'PomodoroSingleFileComponents',
 
-        components: { StateTitle, Control, Cats },
+        components: { StateTitle, Control, CatPics },
 
         data () {
             return {
                 state: STATES.STOPPED,
-                minute: WORKING_TIME,
-                second: 0,
-                pomodoroState: POMODORO_STATES.WORK,
-                timestamp: 0
+                minute: Math.floor(WORKING_TIME / 60),
+                second: (WORKING_TIME % 60),
+                pomodoroState: POMODORO_STATES.WORK
             }
         },
 
@@ -74,18 +68,11 @@
                 this.state = STATES.STOPPED
                 clearInterval(this.interval)
                 this.pomodoroState = POMODORO_STATES.WORK
-                this.minute = WORKING_TIME
-                this.second = 0
+                this.minute = Math.floor(WORKING_TIME / 60)
+                this.second = (WORKING_TIME % 60)
             },
 
             _tick () {
-                // update timestamp for cat-image
-                if (this.second % 10 === 0) {
-                    let date = new Date()
-                    this.timestamp = date.getTime()
-                }
-                console.log(this.second, this.second % 10, this.timestamp)
-
                 if (this.second !== 0) {
                     this.second--
                     return null
@@ -102,9 +89,11 @@
 
                 // timer reset
                 if (this.pomodoroState === POMODORO_STATES.WORK) {
-                    this.minute = WORKING_TIME
+                    this.minute = Math.floor(WORKING_TIME / 60)
+                    this.second = (WORKING_TIME % 60)
                 } else {
-                    this.minute = RESTING_TIME
+                    this.minute = Math.floor(RESTING_TIME / 60)
+                    this.second = (RESTING_TIME % 60)
                 }
             }
         },
