@@ -6,7 +6,7 @@
     <section class="jumbotron p-2">
       <div class="timer display-4">
         <state-title :has-working="pomodoroState==='work'"></state-title>
-        {{ min }}:{{ sec }}
+        {{ minute | leftpad }}:{{ second | leftpad }}
       </div>
     </section>
 
@@ -29,6 +29,7 @@
     import StateTitle from './StateTitleComponent'
     import Control from './ControlsComponent'
     import Cats from './CatsComponent'
+    import leftpad from './../filters/Leftpad'
 
     const POMODORO_STATES = {
         WORK: 'work',
@@ -54,15 +55,6 @@
                 second: 0,
                 pomodoroState: POMODORO_STATES.WORK,
                 timestamp: 0
-            }
-        },
-
-        computed: {
-            min: function () {
-                return (this.minute < 10) ? `0${this.minute}` : this.minute
-            },
-            sec: function () {
-                return (this.second < 10) ? `0${this.second}` : this.second
             }
         },
 
@@ -115,6 +107,10 @@
                     this.minute = RESTING_TIME
                 }
             }
+        },
+
+        filters: {
+            leftpad
         }
     }
 </script>
