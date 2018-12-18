@@ -10,11 +10,7 @@
       </div>
     </section>
 
-    <p class="btn-group" role="group">
-      <button type="button" class="btn btn-outline-primary" @click="start()" :disabled="state==='started'">Play</button>
-      <button type="button" class="btn btn-outline-primary" @click="pause()" :disabled="state!=='started'">Pause</button>
-      <button type="button" class="btn btn-outline-primary" @click="stop()" :disabled="state!=='started' && state!=='paused'">Stop</button>
-    </p>
+    <control-buttons :state="state" @start="onStart" @pause="onPause" @stop="onStop"></control-buttons>
 
     <cat-pics v-if="pomodoroState==='rest'"></cat-pics>
   </div>
@@ -22,7 +18,7 @@
 
 <script>
     import StateTitle from './StateTitleComponent'
-    import Control from './ControlsComponent'
+    import ControlButtons from './ControlsComponent'
     import CatPics from './CatPicsComponent'
     import leftpad from './../filters/Leftpad'
 
@@ -41,7 +37,7 @@
     export default {
         name: 'PomodoroSingleFileComponents',
 
-        components: { StateTitle, Control, CatPics },
+        components: { StateTitle, ControlButtons, CatPics },
 
         data () {
             return {
@@ -53,18 +49,18 @@
         },
 
         methods: {
-            start () {
+            onStart () {
                 this.state = STATES.STARTED
                 this._tick()
                 this.interval = setInterval(this._tick, 1000)
             },
 
-            pause () {
+            onPause () {
                 this.state = STATES.PAUSED
                 clearInterval(this.interval)
             },
 
-            stop () {
+            onStop () {
                 this.state = STATES.STOPPED
                 clearInterval(this.interval)
                 this.pomodoroState = POMODORO_STATES.WORK
