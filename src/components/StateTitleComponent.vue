@@ -1,11 +1,13 @@
 <template>
   <span>
-    <span :class="{'alert-danger':hasWorking, 'alert-success':!hasWorking, }">{{ title }}</span>
+    <span :class="{'alert-danger':isWorking, 'alert-success':!isWorking, }">{{ title }}</span>
   </span>
 
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+
     const TITLE = {
         WORK: 'Work time',
         REST: 'Rest time!'
@@ -14,11 +16,11 @@
     export default {
         name: 'StateTitle',
 
-        props: ['hasWorking'],
-
         computed: {
+            ...mapGetters(['isWorking']),
+
             title: function () {
-                return this.hasWorking ? TITLE.WORK : TITLE.REST
+                return this.isWorking ? TITLE.WORK : TITLE.REST
             }
         }
     }

@@ -1,18 +1,18 @@
 <template>
   <div class="container pt-4 pb-4">
     <h3>Pomodoro timer</h3>
-    <h5 class="mb-4 text-muted">single file components</h5>
+    <h5 class="mb-4 text-muted">single file components + vuex</h5>
 
     <section class="jumbotron p-2">
       <div class="timer display-4">
-        <state-title :has-working="pomodoroState==='work'"></state-title>
+        <state-title></state-title>
         {{ minute | leftpad }}:{{ second | leftpad }}
       </div>
     </section>
 
-    <control-buttons :state="state" @start="onStart" @pause="onPause" @stop="onStop"></control-buttons>
+    <control-buttons></control-buttons>
 
-    <cat-pics v-if="pomodoroState==='rest'"></cat-pics>
+    <cat-pics v-if="!isWorking"></cat-pics>
   </div>
 </template>
 
@@ -20,78 +20,17 @@
     import StateTitle from './StateTitleComponent'
     import ControlButtons from './ControlsComponent'
     import CatPics from './CatPicsComponent'
+    import { mapGetters } from 'vuex'
     import leftpad from './../filters/Leftpad'
-
-    const POMODORO_STATES = {
-        WORK: 'work',
-        REST: 'rest'
-    }
-    const STATES = {
-        STARTED: 'started',
-        STOPPED: 'stopped',
-        PAUSED: 'paused'
-    }
-    const WORKING_TIME = 15 // seconds
-    const RESTING_TIME = 8 // seconds
 
     export default {
         name: 'PomodoroSingleFileComponents',
 
         components: { StateTitle, ControlButtons, CatPics },
 
-        data () {
-            return {
-                state: STATES.STOPPED,
-                minute: Math.floor(WORKING_TIME / 60),
-                second: (WORKING_TIME % 60),
-                pomodoroState: POMODORO_STATES.WORK
-            }
-        },
-
-        methods: {
-            onStart () {
-                this.state = STATES.STARTED
-                this._tick()
-                this.interval = setInterval(this._tick, 1000)
-            },
-
-            onPause () {
-                this.state = STATES.PAUSED
-                clearInterval(this.interval)
-            },
-
-            onStop () {
-                this.state = STATES.STOPPED
-                clearInterval(this.interval)
-                this.pomodoroState = POMODORO_STATES.WORK
-                this.minute = Math.floor(WORKING_TIME / 60)
-                this.second = (WORKING_TIME % 60)
-            },
-
-            _tick () {
-                if (this.second !== 0) {
-                    this.second--
-                    return null
-                }
-
-                if (this.minute !== 0) {
-                    this.minute--
-                    this.second = 59
-                    return null
-                }
-
-                // this.minute===0 && this.second===0
-                this.pomodoroState = (this.pomodoroState === POMODORO_STATES.WORK) ? POMODORO_STATES.REST : POMODORO_STATES.WORK
-
-                // timer reset
-                if (this.pomodoroState === POMODORO_STATES.WORK) {
-                    this.minute = Math.floor(WORKING_TIME / 60)
-                    this.second = (WORKING_TIME % 60)
-                } else {
-                    this.minute = Math.floor(RESTING_TIME / 60)
-                    this.second = (RESTING_TIME % 60)
-                }
-            }
+        computed: {
+            ...mapGetters(['isWorking']),
+            ...mapGetters({minute: 'getMinutes', second: 'getSeconds'})
         },
 
         filters: {

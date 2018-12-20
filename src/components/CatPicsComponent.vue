@@ -8,13 +8,13 @@
 </template>
 
 <script>
+    import { CAT_IMG_URL } from './../config'
+
     export default {
         name: 'CatPics',
-
         computed: {
             catimgsrc () {
-                let date = new Date()
-                return 'http://thecatapi.com/api/images/get?type=gif&size=med&ts=' + date.getTime()
+                return `${CAT_IMG_URL}&ts=${(new Date()).getTime()}`
             }
         }
     }
