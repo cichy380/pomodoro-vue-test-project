@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-noise="'pink'">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       <div class="navbar-nav">
         <router-link to="/plain" class="nav-item nav-link">Plain</router-link>

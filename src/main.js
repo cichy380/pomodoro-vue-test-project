@@ -4,12 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './vuex/store'
+import VueNoiseGeneratorPlugin from './plugins/VueNoiseGeneratorPlugin'
 
 Vue.config.productionTip = false
 
-Vue.filter('leftpad', (value) => {
-    return (value < 10) ? `0${value}` : value
-})
+Vue.use(VueNoiseGeneratorPlugin)
 
 /* eslint-disable no-new */
 new Vue({
